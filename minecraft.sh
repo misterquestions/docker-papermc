@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Move to a working directory
+mkdir server
+cd server
+
 # Ensure we've all the required variables otherwise throw errors (for non optional ones)
 PAPER_BUILD=${PAPER_BUILD:-latest}
 MINECRAFT_MIN_RAM=${MINECRAFT_MIN_RAM:-128M}
