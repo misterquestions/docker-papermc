@@ -1,4 +1,4 @@
-FROM openjdk:16-slim-buster
+FROM openjdk:11-slim-buster
 RUN apt-get update \
   && apt upgrade -y \
   && apt install -y wget
