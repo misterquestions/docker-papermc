@@ -1,7 +1,10 @@
 #!/bin/bash
 
 # Move to a working directory
-mkdir server
+if [ ! -e "server" ]; then
+  mkdir server
+fi
+
 cd server
 
 # Ensure we've all the required variables otherwise throw errors (for non optional ones)
@@ -29,13 +32,13 @@ if [ ! -e ${JAR_NAME} ]; then
   if [[ "${MINECRAFT_SERVER_TYPE}" == "paper" && ! -e eula.txt ]]; then
     echo "Server hasn't been started ever, accepting eula..."
     java -jar ${JAR_NAME}
-    sed -i 's/false/true/g' eula.txt
+    sed -i 's/eula=false/eula=true/g' eula.txt
   fi
 fi
 
 # Actually start the server
 while [ true ]; do
-  clear
+  # clear
   echo "Server startup in progress..."
   echo "Type: ${MINECRAFT_SERVER_TYPE}"
   echo "Version: ${MINECRAFT_VERSION} (${PAPER_BUILD})"
@@ -44,18 +47,17 @@ while [ true ]; do
   java -server -Xms${MINECRAFT_MIN_RAM} -Xmx${MINECRAFT_MAX_RAM} ${MINECRAFT_JAVA_ARGS} -jar ${JAR_NAME} nogui
 
   # Write to a log file the exit code from the server
-  if [[ ! -f "server_exit_codes.log" ]]; then
+  if [ ! -e "server_exit_codes.log" ]; then
     touch "server_exit_codes.log"
   fi
 
   echo "[$(date +"%d.%m.%Y %T")] Server exited with code $?" >> server_exit_codes.log
 
-
   # Ask if we want to prevent automatic restart
   echo "Press enter to prevent the server from restarting, otherwise wait ${MINECRAFT_RESTART_TIME} seconds..."
   read -t ${MINECRAFT_RESTART_TIME} input
 
-  if [[ $? == 0 ]]; then
+  if [ $? == 0 ]; then
     break
   fi
 done
