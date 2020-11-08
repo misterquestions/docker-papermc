@@ -4,7 +4,6 @@ RUN apt-get update \
   && apt install -y wget
 WORKDIR /minecraft
 COPY entrypoint.sh .
-VOLUME /minecraft
-EXPOSE 25565/udp 25565/tcp
 RUN chmod +x entrypoint.sh
-ENTRYPOINT [ "/minecraft/entrypoint.sh" ]
+EXPOSE 25565/udp 25565/tcp
+ENTRYPOINT [ "./entrypoint.sh" ]
