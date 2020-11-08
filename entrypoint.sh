@@ -38,7 +38,7 @@ fi
 
 # Actually start the server
 while [ true ]; do
-  clear
+  # clear
   echo "Server startup in progress..."
   echo "Type: ${MINECRAFT_SERVER_TYPE}"
   echo "Version: ${MINECRAFT_VERSION} (${PAPER_BUILD})"
