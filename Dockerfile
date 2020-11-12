@@ -3,7 +3,7 @@ RUN apt-get update \
   && apt upgrade -y \
   && apt install -y wget
 WORKDIR /minecraft
-ADD https://raw.githubusercontent.com/misterquestions/docker-papermc/main/entrypoint.sh .
-RUN chmod +x entrypoint.sh
+COPY entrypoint.sh /minecraft
+RUN chmod a+x entrypoint.sh
 EXPOSE 25565/udp 25565/tcp
-ENTRYPOINT [ "./entrypoint.sh" ]
+ENTRYPOINT [ "/minecraft/entrypoint.sh" ]
