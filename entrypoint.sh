@@ -34,7 +34,7 @@ if [ ${MINECRAFT_START_DELAY} -gt 0 ]; then
 fi
 
 # Perform initial setup
-JAR_NAME="papermc-${MINECRAFT_VERSION}-${PAPER_BUILD}.jar";
+JAR_NAME="${MINECRAFT_SERVER_TYPE}-${MINECRAFT_VERSION}-${PAPER_BUILD}.jar";
 
 if [ ! -e ${JAR_NAME} ]; then
   wget "https://papermc.io/api/v1/${MINECRAFT_SERVER_TYPE}/${MINECRAFT_VERSION}/${PAPER_BUILD}/download" -O ${JAR_NAME};
