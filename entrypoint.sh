@@ -10,6 +10,7 @@ fi
 cd "${WORK_DIRECTORY}";
 
 # Ensure we've all the required variables otherwise throw errors (for non optional ones)
+MINECRAFT_START_DELAY=${MINECRAFT_START_DELAY:-0}
 PAPER_BUILD=${PAPER_BUILD:-latest}
 MINECRAFT_MIN_RAM=${MINECRAFT_MIN_RAM:-128M}
 MINECRAFT_MAX_RAM=${MINECRAFT_MAX_RAM:-2G}
@@ -25,6 +26,13 @@ if [ -z "${MINECRAFT_VERSION}" ]; then
   exit 1;
 fi
 
+# Delay start (if enabled)
+if [ ${MINECRAFT_START_DELAY} -gt 0 ]; then
+  echo "Delayed start enabled, waiting for ${MINECRAFT_START_DELAY} seconds";
+  sleep ${MINECRAFT_START_DELAY};
+  clear;
+fi
+
 # Perform initial setup
 JAR_NAME="papermc-${MINECRAFT_VERSION}-${PAPER_BUILD}.jar";
 
@@ -36,11 +44,11 @@ if [[ ! -e eula.txt && "${MINECRAFT_SERVER_TYPE}" == "paper" ]]; then
   echo "Server hasn't been started ever, accepting eula...";
   java -jar ${JAR_NAME};
   sed -i 's/false/true/g' eula.txt;
+  clear;
 fi
 
 # Actually start the server
 while [ true ]; do
-  clear;
   echo "Server startup in progress...";
   echo "Type: ${MINECRAFT_SERVER_TYPE}";
   echo "Version: ${MINECRAFT_VERSION} (${PAPER_BUILD})";
