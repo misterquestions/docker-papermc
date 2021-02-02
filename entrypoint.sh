@@ -26,6 +26,9 @@ if [ -z "${MINECRAFT_VERSION}" ]; then
   exit 1;
 fi
 
+# Trap exit signal
+trap 'exit 0' SIGTERM
+
 # Delay start (if enabled)
 if [ ${MINECRAFT_START_DELAY} -gt 0 ]; then
   echo "Delayed start enabled, waiting for ${MINECRAFT_START_DELAY} seconds";
